@@ -1,8 +1,6 @@
 .vscode/
 .vs
-var/config.php
 vendor
 composer.lock
 **/win/obj/
-win/.env
 win/bin
