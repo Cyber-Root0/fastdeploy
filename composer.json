@@ -1,0 +1,23 @@
+{
+    "name": "cr0/fastdeploy",
+    "description": "FastDeploy | Automatize o processo de deploy",
+    "autoload": {
+        "psr-4": {
+            "FastDeploy\\": "app/"
+        },
+        "files": [
+            "var/config.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Bruno Alves",
+            "email": "boteistem@gmail.com"
+        }
+    ],
+    "require": { 
+        "symfony/console": "6.3.4",
+        "cr0/http-client": "^1.2",
+        "twig/twig": "^3.0"
+    }
+}
