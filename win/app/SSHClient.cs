@@ -66,8 +66,12 @@ namespace FastDeploy.app
         private void startDeploy(SshClient sshclient){
             uint rport = RemotePortForwarding.getAvailablePort();
             string domain = deploy.domain;
-            var output = sshclient.RunCommand($"/var/www/deploy/bin/fastdeploy deploy -r {rport} -s {domain}");
-            Logger.info("SSL: Certificado instalado com sucesso");
+            var output = sshclient.RunCommand($"sudo /var/www/fastdeploy/bin/fastdeploy deploy -r {rport} -s {domain}");
+            if (output.Result == "success"){
+                Logger.info("SSL: Certificado instalado com sucesso");
+            }else{
+                throw new Exception("Ocorreu um erro ao iniciar o deploy.");
+            }
         }
         /// <summary>
         /// Create SSHClient with default authentication

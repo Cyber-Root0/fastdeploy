@@ -33,10 +33,17 @@ class Deploy extends Command
             ->addOption('subdomain', 's', InputOption::VALUE_REQUIRED, 'Subdominio da aplicação temporária.'); 
     }
     protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $rport = $input->getOption('rport');
-        $subdomain = $input->getOption('subdomain');
-        var_dump($this->nginx->execute($subdomain, $rport));
+    {   
+        try{
+            $rport = $input->getOption('rport');
+            $subdomain = $input->getOption('subdomain');
+            $this->nginx->execute($subdomain, $rport);
+            echo "success";
+            return Command::SUCCESS;
+        }catch(\Exception $e){
+            echo "fail";
+            exit;
+        }
         return Command::SUCCESS;
     }
 
