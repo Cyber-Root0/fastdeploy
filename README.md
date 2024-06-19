@@ -1,10 +1,136 @@
-<div class="flex w-full flex-col gap-1 juice:empty:hidden juice:first:pt-[3px]"><div class="markdown prose w-full break-words dark:prose-invert light"><h1>FastDeploy</h1><p>FastDeploy é uma ferramenta que automatiza o deploy de aplicações locais no servidor, utilizando SSH Port Forwarding juntamente com o reverse proxy do Nginx, integrado com a Cloudflare. Além disso, ao ser executado no Windows, FastDeploy cria um subdomínio automaticamente, redirecionando para a porta local da aplicação, fazendo com que a aplicação fique disponível através de um link público.</p><h2>Pré-requisitos</h2><ul><li>PHP instalado</li><li>Nginx configurado</li><li>Conta e token de API do Cloudflare</li></ul><h2>Instalação no Linux</h2><ol><li><p><strong>Instale o PHP</strong> se ainda não estiver instalado.</p></li><li><p><strong>Configure o Nginx</strong>:</p><ul><li>Crie uma aplicação no Nginx em <code>/var/www/deploy</code>.</li><li>Clone o repositório do GitHub para o diretório criado:<pre><div class="dark bg-gray-950 rounded-md border-[0.5px] border-token-border-medium"><div class="flex items-center relative text-token-text-secondary bg-token-main-surface-secondary px-4 py-2 text-xs font-sans justify-between rounded-t-md"><span>sh</span><div class="flex items-center"><span class="" data-state="closed"><button class="flex gap-1 items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon-sm"><path fill="currentColor" fill-rule="evenodd" d="M7 5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-2v2a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h2zm2 2h5a3 3 0 0 1 3 3v5h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1zM5 9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1z" clip-rule="evenodd"></path></svg>Copy code</button></span></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="!whitespace-pre hljs language-sh">git <span class="hljs-built_in">clone</span> &lt;URL_DO_REPOSITORIO&gt; /var/www/deploy
-</code></div></div></pre></li></ul></li><li><p><strong>Configuração do arquivo <code>config.php</code></strong>:</p><ul><li>Navegue até o diretório <code>/var/www/deploy</code>.</li><li>Edite o arquivo <code>config.php</code> com os seguintes parâmetros:<pre><div class="dark bg-gray-950 rounded-md border-[0.5px] border-token-border-medium"><div class="flex items-center relative text-token-text-secondary bg-token-main-surface-secondary px-4 py-2 text-xs font-sans justify-between rounded-t-md"><span>php</span><div class="flex items-center"><span class="" data-state="closed"><button class="flex gap-1 items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon-sm"><path fill="currentColor" fill-rule="evenodd" d="M7 5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-2v2a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h2zm2 2h5a3 3 0 0 1 3 3v5h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1zM5 9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1z" clip-rule="evenodd"></path></svg>Copy code</button></span></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="!whitespace-pre hljs language-php"><span class="hljs-title function_ invoke__">define</span>(<span class="hljs-string">'CLOUDFLARE_TOKEN'</span>, <span class="hljs-string">''</span>); <span class="hljs-comment">// Token da API do Cloudflare</span>
-<span class="hljs-title function_ invoke__">define</span>(<span class="hljs-string">'CLOUDFLARE_ZONE'</span>, <span class="hljs-string">''</span>); <span class="hljs-comment">// Zona do Cloudflare</span>
-<span class="hljs-title function_ invoke__">define</span>(<span class="hljs-string">'SERVER_IP'</span>, <span class="hljs-string">''</span>); <span class="hljs-comment">// IP do servidor</span>
-</code></div></div></pre></li></ul></li></ol><h2>Executando o FastDeploy no Windows</h2><ol><li><p><strong>Compile a aplicação</strong>:</p><ul><li>Navegue até o diretório <code>/win</code>.</li><li>Compile a aplicação.</li></ul></li><li><p><strong>Configure o arquivo <code>.env</code></strong>:</p><ul><li>Antes de compilar, edite o arquivo <code>.env</code> com as seguintes informações:<pre><div class="dark bg-gray-950 rounded-md border-[0.5px] border-token-border-medium"><div class="flex items-center relative text-token-text-secondary bg-token-main-surface-secondary px-4 py-2 text-xs font-sans justify-between rounded-t-md"><span>makefile</span><div class="flex items-center"><span class="" data-state="closed"><button class="flex gap-1 items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon-sm"><path fill="currentColor" fill-rule="evenodd" d="M7 5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-2v2a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h2zm2 2h5a3 3 0 0 1 3 3v5h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1zM5 9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1z" clip-rule="evenodd"></path></svg>Copy code</button></span></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="!whitespace-pre hljs language-makefile">REMOTE_HOST=<span class="hljs-string">""</span>       <span class="hljs-comment"># IP do servidor</span>
-REMOTE_USER=<span class="hljs-string">""</span>       <span class="hljs-comment"># Usuário SSH</span>
-REMOTE_TOKEN=<span class="hljs-string">""</span>      <span class="hljs-comment"># Senha SSH</span>
-REMOTE_DOMAIN=<span class="hljs-string">""</span>     <span class="hljs-comment"># Domínio principal</span>
-SERVICE_URL=<span class="hljs-string">""</span>       <span class="hljs-comment"># Domínio da aplicação no Nginx</span>
-</code></div></div></pre></li></ul></li><li><p><strong>Execute a aplicação</strong>:</p><ul><li>Após a configuração, execute a aplicação compilada para iniciar o deploy.</li></ul></li></ol><h2>Funcionamento</h2><p>O FastDeploy automatiza o processo de deploy utilizando as seguintes tecnologias:</p><ul><li><strong>SSH Port Forwarding</strong>: Para comunicação segura com o servidor remoto.</li><li><strong>Nginx Reverse Proxy</strong>: Para roteamento de requisições.</li><li><strong>Cloudflare</strong>: Para gerenciamento de DNS e proteção DDoS.</li></ul><h3>Criação de Subdomínio</h3><p>Ao ser executado no Windows, FastDeploy cria automaticamente um subdomínio que redireciona para a porta local da aplicação, tornando a aplicação acessível através de um link público.</p><p>Com essas integrações, o FastDeploy facilita o deploy contínuo e seguro de suas aplicações, garantindo que todas as alterações locais sejam refletidas automaticamente no servidor.</p><h2>Contribuições</h2><p>Contribuições são bem-vindas! Para reportar bugs ou sugerir melhorias, abra uma issue no repositório GitHub.</p><h2>Licença</h2><p>Este projeto está licenciado sob a licença MIT. Consulte o arquivo LICENSE para obter mais informações.</p><hr><p>Para mais detalhes sobre o uso e contribuições, consulte a documentação completa no repositório GitHub.</p></div></div>
+### 🚀 Facilitando o Deploy de Aplicações com o FastDeploy 🚀
+
+Você já enfrentou desafios ao disponibilizar seus projetos locais publicamente? O **FastDeploy** é a solução que você precisa!
+
+Essa poderosa ferramenta automatiza o deploy de suas aplicações locais diretamente no servidor, utilizando **SSH Port Forwarding** juntamente com o **reverse proxy do Nginx**, tudo isso integrado com a **Cloudflare**.
+
+🔹 **Automação e Facilidade**: Com o FastDeploy, você não precisa se preocupar com processos manuais e complexos de deploy. Ele cuida de tudo para você!
+
+🔹 **Subdomínio Automático no Windows**: Ao ser executado no Windows, o FastDeploy cria automaticamente um subdomínio, redirecionando para a porta local da sua aplicação. Isso significa que sua aplicação estará disponível através de um link público em questão de segundos.
+
+🔹 **Segurança e Performance**: Integrando com a Cloudflare, o FastDeploy garante que sua aplicação não apenas esteja disponível publicamente, mas também tenha um certificado SSL para o HTTPS para Segurança e Performance.
+
+O FastDeploy é a ferramenta ideal para desenvolvedores que desejam compartilhar seus projetos locais de maneira simples e eficiente. Não perca mais tempo com configurações complicadas.
+
+Experimente o FastDeploy e veja como ele pode transformar a maneira como você faz deploy das suas aplicações!
+## Instalação no Windows
+
+Faça o Download do repositório
+
+```bash
+  git clone https://github.com/Cyber-Root0/fastdeploy
+```
+Abra a pasta "releases" de acordo com a compatibilidade com o seu Windows.
+
+```bash
+  cd fastdeploy && cd releases/Windows/v1/net6.0
+```
+
+Inicie a ferramenta com o comando:
+
+```bash
+  FastDeploy deploy
+```
+#### Configurando a ferramenta.
+
+🔹 **localPort**: Porta onde o seu projeto está rodando na máquina atual.
+
+🔹 **domain**: Nome do subdominio alocado para o projeto atual.
+
+![CLI TOOL](https://raw.githubusercontent.com/Cyber-Root0/fastdeploy/master/doc/images/cli-tool.png)
+
+
+#### Veja o projeto Local disponivel com link público em segundos:
+![Logo](https://raw.githubusercontent.com/Cyber-Root0/fastdeploy/master/doc/images/localproject.png)
+
+
+USAR VPS DEDICADA:
+--------------
+
+*   PHP instalado
+*   Nginx configurado
+*   Conta e token de API do Cloudflare
+
+Instalação no Linux
+-------------------
+
+1.  **Instale o PHP** se ainda não estiver instalado.
+    
+2.  **Configure o Nginx**:
+    
+    *   Crie uma aplicação no Nginx em `/var/www/fastdeploy`.
+    *   Clone o repositório do GitHub para o diretório criado:
+        
+        `git clone <URL_DO_REPOSITORIO> /var/www/fastdeploy`
+        
+3.  **Configuração do arquivo `config.php`**:
+    
+    *   Navegue até o diretório `/var/www/fastdeploy`.
+    *   Edite o arquivo `var/config.php` com os seguintes parâmetros:
+        
+        `define('CLOUDFLARE_TOKEN', ''); // Token da API do Cloudflare `
+        
+        `define('CLOUDFLARE_ZONE', ''); // Zona do Cloudflare`
+
+        `define('SERVER_IP', ''); // IP do servidor`
+        
+
+Executando o FastDeploy no Windows
+----------------------------------
+
+1.  **Compile a aplicação**:
+    
+    *   Navegue até o diretório `/win`.
+    *   Compile a aplicação.
+2.  **Configure o arquivo `.env`**:
+    
+    *   Antes de compilar, edite o arquivo `.env` com as seguintes informações:
+        
+* REMOTE_HOST=""       # IP do servidor** 
+* REMOTE_USER=""       # Usuário SSH** 
+* REMOTE_TOKEN=""      # Senha SSH 
+* REMOTE_DOMAIN=""     # Domínio principal 
+* SERVICE_URL=""       # Domínio da aplicação no Nginx
+        
+3.  **Execute a aplicação**:
+    
+    *   Após a configuração, execute a aplicação compilada para iniciar o deploy.
+
+Funcionamento
+-------------
+
+O FastDeploy automatiza o processo de deploy utilizando as seguintes tecnologias:
+
+*   **SSH Port Forwarding**: Para comunicação segura com o servidor remoto.
+*   **Nginx Reverse Proxy**: Para roteamento de requisições.
+*   **Cloudflare**: Para gerenciamento de DNS e proteção DDoS.
+
+### Criação de Subdomínio
+
+Ao ser executado no Windows, FastDeploy cria automaticamente um subdomínio que redireciona para a porta local da aplicação, tornando a aplicação acessível através de um link público.
+
+Com essas integrações, o FastDeploy facilita o deploy contínuo e seguro de suas aplicações, garantindo que todas as alterações locais sejam refletidas automaticamente no servidor.
+
+Contribuições
+-------------
+
+Contribuições são bem-vindas! Para reportar bugs ou sugerir melhorias, abra uma issue no repositório GitHub.
+
+Licença
+-------
+
+Este projeto está licenciado sob a licença MIT. Consulte o arquivo LICENSE para obter mais informações.
+
+* * *
+
+Para mais detalhes sobre o uso e contribuições, consulte a documentação completa no repositório GitHub.
+## 🚀 About Me
+I'm Bruno Alves from Brazil
+
+- 🔭 I’m working as PHP Developer
+- 📚 I'm currently learning 3DS Secure Payments, Banks Integrations
+- ⚡ In my free time I play games and watch movies
+
+
+## 🔗 Links
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/bruno-fullsteck/)
